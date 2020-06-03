@@ -386,24 +386,24 @@ class DMatrix(object):
         label = _maybe_dt_array(label)
         weight = _maybe_dt_array(weight)
 
-        if isinstance(data, list):
-            warnings.warn('Initializing DMatrix from List is deprecated.',
-                          DeprecationWarning)
-
-        if isinstance(data, STRING_TYPES):
-            handle = ctypes.c_void_p()
-            _check_call(_LIB.XGDMatrixCreateFromFile(c_str(data),
-                                                     ctypes.c_int(silent),
-                                                     ctypes.byref(handle)))
-            self.handle = handle
-        elif isinstance(data, scipy.sparse.csr_matrix):
-            self._init_from_csr(data)
-        elif isinstance(data, scipy.sparse.csc_matrix):
-            self._init_from_csc(data)
-        elif isinstance(data, np.ndarray):
+        #  if isinstance(data, list):
+        #      warnings.warn('Initializing DMatrix from List is deprecated.',
+        #                    DeprecationWarning)
+        #  
+        #  if isinstance(data, STRING_TYPES):
+        #      handle = ctypes.c_void_p()
+        #      _check_call(_LIB.XGDMatrixCreateFromFile(c_str(data),
+        #                                               ctypes.c_int(silent),
+        #                                               ctypes.byref(handle)))
+        #      self.handle = handle
+        #  elif isinstance(data, scipy.sparse.csr_matrix):
+        #      self._init_from_csr(data)
+        #  elif isinstance(data, scipy.sparse.csc_matrix):
+        #      self._init_from_csc(data)
+        if isinstance(data, np.ndarray):
             self._init_from_npy2d(data, missing, nthread)
-        elif isinstance(data, DataTable):
-            self._init_from_dt(data, nthread)
+        #  elif isinstance(data, DataTable):
+        #      self._init_from_dt(data, nthread)
         else:
             try:
                 csr = scipy.sparse.csr_matrix(data)
@@ -1069,48 +1069,48 @@ class Booster(object):
             _check_call(_LIB.XGBoosterSetAttr(
                 self.handle, c_str(key), value))
 
-    def set_param(self, params, value=None):
-        """Set parameters into the Booster.
-
-        Parameters
-        ----------
-        params: dict/list/str
-           list of key,value pairs, dict of key to value or simply str key
-        value: optional
-           value of the specified parameter, when params is str key
-        """
-        if isinstance(params, Mapping):
-            params = params.items()
-        elif isinstance(params, STRING_TYPES) and value is not None:
-            params = [(params, value)]
-        for key, val in params:
-            _check_call(_LIB.XGBoosterSetParam(self.handle, c_str(key), c_str(str(val))))
-
-    def update(self, dtrain, iteration, fobj=None):
-        """Update for one iteration, with objective function calculated
-        internally.  This function should not be called directly by users.
-
-        Parameters
-        ----------
-        dtrain : DMatrix
-            Training data.
-        iteration : int
-            Current iteration number.
-        fobj : function
-            Customized objective function.
-
-        """
-        if not isinstance(dtrain, DMatrix):
-            raise TypeError('invalid training matrix: {}'.format(type(dtrain).__name__))
-        self._validate_features(dtrain)
-
-        if fobj is None:
-            _check_call(_LIB.XGBoosterUpdateOneIter(self.handle, ctypes.c_int(iteration),
-                                                    dtrain.handle))
-        else:
-            pred = self.predict(dtrain)
-            grad, hess = fobj(pred, dtrain)
-            self.boost(dtrain, grad, hess)
+    #  def set_param(self, params, value=None):
+    #      """Set parameters into the Booster.
+    #  
+    #      Parameters
+    #      ----------
+    #      params: dict/list/str
+    #         list of key,value pairs, dict of key to value or simply str key
+    #      value: optional
+    #         value of the specified parameter, when params is str key
+    #      """
+    #      if isinstance(params, Mapping):
+    #          params = params.items()
+    #      elif isinstance(params, STRING_TYPES) and value is not None:
+    #          params = [(params, value)]
+    #      for key, val in params:
+    #          _check_call(_LIB.XGBoosterSetParam(self.handle, c_str(key), c_str(str(val))))
+    #  
+    #  def update(self, dtrain, iteration, fobj=None):
+    #      """Update for one iteration, with objective function calculated
+    #      internally.  This function should not be called directly by users.
+    #  
+    #      Parameters
+    #      ----------
+    #      dtrain : DMatrix
+    #          Training data.
+    #      iteration : int
+    #          Current iteration number.
+    #      fobj : function
+    #          Customized objective function.
+    #  
+    #      """
+    #      if not isinstance(dtrain, DMatrix):
+    #          raise TypeError('invalid training matrix: {}'.format(type(dtrain).__name__))
+    #      self._validate_features(dtrain)
+    #  
+    #      if fobj is None:
+    #          _check_call(_LIB.XGBoosterUpdateOneIter(self.handle, ctypes.c_int(iteration),
+    #                                                  dtrain.handle))
+    #      else:
+    #          pred = self.predict(dtrain)
+    #          grad, hess = fobj(pred, dtrain)
+    #          self.boost(dtrain, grad, hess)
 
     def boost(self, dtrain, grad, hess):
         """Boost the booster for one iteration, with customized gradient

@@ -8,6 +8,8 @@ from __future__ import absolute_import
 
 import os
 
+from .federated import Federated
+
 from .core import DMatrix, Booster
 from .training import train, cv
 from . import rabit                   # noqa
@@ -26,4 +28,6 @@ __all__ = ['DMatrix', 'Booster',
            'train', 'cv',
            'XGBModel', 'XGBClassifier', 'XGBRegressor', 'XGBRanker',
            'XGBRFClassifier', 'XGBRFRegressor',
-           'plot_importance', 'plot_tree', 'to_graphviz']
+           'plot_importance', 'plot_tree', 'to_graphviz'
+           'Federated']
+
