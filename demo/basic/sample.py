@@ -13,8 +13,15 @@ dtrain = fed.load_data("../data/hb_train.csv")
 dval = fed.load_data("../data/hb_val.csv")
 
 # Train a model
-params = {"max_depth": 3, "min_child_weight": 1.0, "lambda": 1.0}
-num_rounds = 40
+params = {
+        "max_depth": 3, 
+        "min_child_weight": 1.0, 
+        "lambda": 1.0,
+        "tree_method": "hist",
+        "objective": "binary:logistic"
+        }
+
+num_rounds = 20
 bst = xgb.train(params, dtrain, num_rounds, evals=[(dtrain, "dtrain"), (dval, "dval")])
 
 dtest = fed.load_data("../data/hb_test.csv")
