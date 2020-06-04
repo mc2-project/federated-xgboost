@@ -10,4 +10,4 @@ Please feel free to reach out to us if you would like to use Federated XGBoost f
 
 ## Documentation
 
-TBD
+To get started with the library, please refer to the [documentation](https://federated-xgboost.readthedocs.io/en/latest/).
