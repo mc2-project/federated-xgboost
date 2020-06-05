@@ -3,11 +3,22 @@ from .training import train
 from .core import DMatrix, Booster
 from . import rabit
 import logging
+import json
 
 logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 class Federated:
     def __init__(self, rabit_config):
+        """
+        Parameters
+        ----------
+        rabit_config : list
+            list of Rabit configuration variables
+        """
+        rabit_config_lst = json.loads(str(rabit_config))
+
+        # Python strings are unicode, but C strings are bytes, so we must convert to bytes.
+        rabit_config = [bytes(s, 'utf-8') for s in rabit_config]
         rabit.init(rabit_config)
         self.model = None
 

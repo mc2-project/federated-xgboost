@@ -37,7 +37,8 @@ def get_dmlc_vars(env):
         'DMLC_NUM_SERVER=' + str(env.DMLC_NUM_SERVER),
     ]
     # Python strings are unicode, but C strings are bytes, so we must convert to bytes.
-    return [bytes(s, 'utf-8') for s in temp]
+    #  return [bytes(s, 'utf-8') for s in temp]
+    return temp
 
 
 class FederatedXGBoostServicer():
@@ -84,9 +85,10 @@ class FederatedXGBoostServicer():
         try:
             print('Starting federated training session')
             path_to_script = request.path
-            print(self.rabit_config)
-            print(path_to_script)
+            print("Rabit config: ", self.rabit_config)
             rabit_config_str = json.dumps(self.rabit_config)
+            print("Rabit config: ", self.rabit_config)
+            print(rabit_config_str)
             process = subprocess.Popen(["python3", path_to_script, rabit_config_str], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             # Real time output of process
