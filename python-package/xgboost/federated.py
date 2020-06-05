@@ -7,8 +7,8 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 class Federated:
-    def __init__(self):
-        rabit.init()
+    def __init__(self, rabit_config):
+        rabit.init(rabit_config)
         self.model = None
 
     def load_data(self, data, missing=None, weight=None, 
