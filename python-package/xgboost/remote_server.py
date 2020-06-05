@@ -44,7 +44,8 @@ class FederatedXGBoostServicer():
     ''' gRPC servicer class which implements worker machine RPCs API. '''
 
     def __init__(self):
-        self.dmlc_vars = None
+        # A list of variables to configure rabit
+        self.rabit_config = None
 
     def Init(self, request, context):
         '''
@@ -64,7 +65,7 @@ class FederatedXGBoostServicer():
             print("Please enter 'Y' to confirm or 'N' to reject.")
             accept_job = input("Join session? [Y/N]: ")
         if accept_job == 'Y':
-            self.dmlc_vars = get_dmlc_vars(request.dmlc_vars)
+            self.rabit_config = get_dmlc_vars(request.dmlc_vars)
             return fxgb_pb2.WorkerResponse(success=True)
         else:
             return fxgb_pb2.WorkerResponse(success=False)
@@ -81,10 +82,12 @@ class FederatedXGBoostServicer():
             WorkerResponse proto (confirmation of training success or failure).
         '''
         try:
-            print('Request from aggregator [%s] to start federated training session:' % context.peer())
+            print('Starting federated training session')
             path_to_script = request.path
-            dmlc_vars_as_string = json.dumps(self.dmlc_vars)
-            process = subprocess.Popen(["python3", path_to_script, dmlc_vars_as_string], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            print(self.rabit_config)
+            print(path_to_script)
+            rabit_config_str = json.dumps(self.rabit_config)
+            process = subprocess.Popen(["python3", path_to_script, rabit_config_str], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             # Real time output of process
             while True:

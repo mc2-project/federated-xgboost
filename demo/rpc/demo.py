@@ -1,6 +1,9 @@
 import sys
+import json
 
 rabit_config = json.loads(sys.argv[1])
+
+print(rabit_config)
 
 # Instantiate Federated XGBoost
 fed = xgb.Federated(rabit_config)
