@@ -76,8 +76,6 @@ set_target_properties(dmlc PROPERTIES
   POSITION_INDEPENDENT_CODE ON)
 list(APPEND LINKED_LIBRARIES_PRIVATE dmlc)
 
-find_package(OpenSSL REQUIRED)
-
 # rabit
 # full rabit doesn't build on windows, so we can't import it as subdirectory
 if(MINGW OR R_LIB)
@@ -88,13 +86,9 @@ else ()
   set(RABIT_SOURCES
     rabit/src/allreduce_base.cc
     rabit/src/allreduce_robust.cc
-    rabit/src/engine.cc
-    rabit/src/c_api.cc
-    rabit/src/ssl_context_manager.cc
-    rabit/src/ssl_socket.cc)
+    rabit/src/engine.cc)
 endif (MINGW OR R_LIB)
 add_library(rabit STATIC ${RABIT_SOURCES})
-target_link_libraries(rabit OpenSSL::SSL)
 target_include_directories(rabit PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/dmlc-core/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/rabit/include/rabit>

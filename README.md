@@ -16,7 +16,14 @@ Please feel free to reach out to us if you would like to use Federated XGBoost f
 git clone --recursive https://github.com/mc2-project/federated-xgboost.git
 ```
 
-2. Build Federated XGBoost.
+2. Install Federated XGBoost dependencies.
+
+```
+sudo apt-get install cmake
+pip3 install numpy grpcio grpcio-tools
+```
+
+3. Build Federated XGBoost.
 
 ```
 cd federated-xgboost
@@ -26,7 +33,7 @@ cmake ..
 make
 ```
 
-3. Install the Python package.
+4. Install the Python package.
 
 ```
 cd python-package
@@ -36,7 +43,7 @@ sudo python3 setup.py install
 ## Quickstart
 This quickstart uses the tutorial located in `demo/basic`. In this tutorial, each party in the federation starts an RPC server on port 50051 to listen for the aggregator. The aggregator sends invitations to all parties to join the computation. Once all parties have accepted the invitation, training commences -- the training script `demo.py` is run.
 
-In Federated XGBoost, the training script must be at the same location at each party.
+The implementation currently requires that each party's training data be at the same location, i.e., have the same path, and that the aggregator also have training data.
 
 1. Modify `hosts.config` to contain the IP addresses of all parties in the federation. Each line in `hosts.config` is in the following format
 
@@ -46,13 +53,15 @@ In Federated XGBoost, the training script must be at the same location at each p
 
 For the purposes of this demo, `<port>` should be `50051`.
 
-2. Start the RPC server at each party. 
+2. This demo uses data from the [Higgs boson](https://archive.ics.uci.edu/ml/datasets/HIGGS) dataset. The `demo/data/` directory contains 4 files of training data: `hb_train_1.csv`, `hb_train_2.csv`, `hb_train_3.csv`, and `hb_train_4.csv`. At each party, change the name of **one** of the training data files to `hb_train.csv`.
+
+3. Start the RPC server at each party. 
 
 ```
 python3 serve.py
 ```
 
-3. At the aggregator, send invitations to all parties.
+4. At the aggregator, send invitations to all parties.
 
 ```
 ../../dmlc-core/tracker/dmlc-submit --log-level DEBUG --cluster rpc --num-workers 2 --host-file hosts.config  --worker-memory 4g /path/to/federated-xgboost/demo/basic/demo.py
@@ -66,6 +75,6 @@ Please enter 'Y' to confirm or 'N' to reject.
 Join session? [Y/N]:
 ```
 
-4. Once all parties submit `Y`, training begins.
+5. Once all parties submit `Y`, training begins.
 
 
