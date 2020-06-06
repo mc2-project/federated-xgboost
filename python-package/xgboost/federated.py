@@ -26,8 +26,6 @@ class Federated:
         rabit_config_lst.append("rabit_cert_chain_path=" + certificate_chain)
         rabit_config_lst.append("rabit_private_key_path=" + private_key)
 
-        print(rabit_config_lst)
-
         # Python strings are unicode, but C strings are bytes, so we must convert to bytes.
         rabit_config = [bytes(s, 'utf-8') for s in rabit_config_lst]
 
