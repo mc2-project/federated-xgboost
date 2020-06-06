@@ -66,7 +66,7 @@ class FederatedXGBoostServicer():
             print("Please enter 'Y' to confirm or 'N' to reject.")
             accept_job = input("Join session? [Y/N]: ")
         if accept_job == 'Y':
-            self.rabit_config = config_rabit(request.rabit_config)
+            self.rabit_config = config_rabit(request.dmlc_vars)
             return fxgb_pb2.WorkerResponse(success=True)
         else:
             return fxgb_pb2.WorkerResponse(success=False)
