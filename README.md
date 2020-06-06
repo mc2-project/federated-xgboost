@@ -41,11 +41,11 @@ sudo python3 setup.py install
 ```
 
 ## Quickstart
-This quickstart uses the tutorial located in `demo/basic`. In this tutorial, each party in the federation starts an RPC server on port 50051 to listen for the aggregator. The aggregator sends invitations to all parties to join the computation. Once all parties have accepted the invitation, training commences -- the training script `demo.py` is run.
+This quickstart uses the tutorial located in `demo/basic`. In this tutorial, each of the two parties in the federation starts an RPC server on port 50051 to listen for the aggregator. The aggregator sends invitations to all parties to join the computation. Once all parties have accepted the invitation, training commences -- the training script `demo.py` is run.
 
 The implementation currently requires that each party's training data be at the same location, i.e., have the same path, and that the aggregator also have training data.
 
-1. Modify `hosts.config` to contain the IP addresses of all parties in the federation. Each line in `hosts.config` is in the following format
+1. Modify `hosts.config` to contain the IP addresses of all parties in the federation. Each line in `hosts.config` follows the following format:
 
 ```
 <ip_addr>:<port>
@@ -53,7 +53,7 @@ The implementation currently requires that each party's training data be at the 
 
 For the purposes of this demo, `<port>` should be `50051`.
 
-2. This demo uses data from the [Higgs boson](https://archive.ics.uci.edu/ml/datasets/HIGGS) dataset. The `demo/data/` directory contains 4 files of training data: `hb_train_1.csv`, `hb_train_2.csv`, `hb_train_3.csv`, and `hb_train_4.csv`. At each party, change the name of **one** of the training data files to `hb_train.csv`.
+2. This demo uses data from the [Higgs boson](https://archive.ics.uci.edu/ml/datasets/HIGGS) dataset. The `demo/data/` directory contains 4 files of training data: `hb_train_1.csv`, `hb_train_2.csv`, `hb_train_3.csv`, and `hb_train_4.csv`. At each party, change the name of a different training data file to `hb_train.csv`.
 
 3. Start the RPC server at each party. 
 
@@ -64,7 +64,7 @@ python3 serve.py
 4. At the aggregator, send invitations to all parties.
 
 ```
-../../dmlc-core/tracker/dmlc-submit --log-level DEBUG --cluster rpc --num-workers 2 --host-file hosts.config  --worker-memory 4g /path/to/federated-xgboost/demo/basic/demo.py
+dmlc-core/tracker/dmlc-submit --cluster rpc --num-workers 2 --host-file hosts.config  --worker-memory 4g /path/to/federated-xgboost/demo/basic/demo.py
 ```
 
 Each party should receive an invitation through their console:
