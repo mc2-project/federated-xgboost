@@ -86,7 +86,8 @@ else ()
   set(RABIT_SOURCES
     rabit/src/allreduce_base.cc
     rabit/src/allreduce_robust.cc
-    rabit/src/engine.cc)
+    rabit/src/engine.cc
+    rabit/src/c_api.cc)
 endif (MINGW OR R_LIB)
 add_library(rabit STATIC ${RABIT_SOURCES})
 target_include_directories(rabit PRIVATE
