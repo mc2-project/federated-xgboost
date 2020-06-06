@@ -85,20 +85,18 @@ class FederatedXGBoostServicer():
         try:
             print('Starting federated training session')
             path_to_script = request.path
-            print("Rabit config: ", self.rabit_config)
             rabit_config_str = json.dumps(self.rabit_config)
-            print("Rabit config: ", self.rabit_config)
-            print(rabit_config_str)
-            process = subprocess.Popen(["python3", path_to_script, rabit_config_str], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            cmd = ["python3", str(path_to_script), str(rabit_config_str)]
 
             # Real time output of process
-            while True:
-                output = process.stdout.readline()
-                if output == '' and process.poll() is not None:
-                    break
-                if output:
-                    print(output.strip())
-            rc = process.poll()
+            process = subprocess.Popen(
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+            for line in iter(process.stdout.readline, b''):
+                line = line.decode("utf-8")
+                sys.stdout.write(line)
+
+            rc = process.returncode
 
             if rc == 0:
                 return fxgb_pb2.WorkerResponse(success=True)

@@ -1,8 +1,8 @@
 import sys
+import xgboost as xgb 
 
-rabit_config = sys.argv[1])
-
-print("In demo.py: ", rabit_config)
+print("Running demo.py")
+rabit_config = sys.argv[1]
 
 # Instantiate Federated XGBoost
 fed = xgb.Federated(rabit_config)
