@@ -8,6 +8,12 @@ This project is currently under development as part of the broader **mc<sup>2</s
 
 Please feel free to reach out to us if you would like to use Federated XGBoost for your applications. We also welcome contributions to our work!
 
-## Documentation
+## Installation 
 
-To get started with the library, please refer to the [documentation](https://federated-xgboost.readthedocs.io/en/latest/).
+1. Clone this repository and its submodules.
+
+    ```
+    git clone --recursive https://github.com/mc2-project/federated-xgboost.git
+    ```
+
+
