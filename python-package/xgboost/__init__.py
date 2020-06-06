@@ -13,6 +13,7 @@ from .federated import Federated
 from .core import DMatrix, Booster
 from .training import train, cv
 from . import rabit                   # noqa
+from .remote_server import listen
 try:
     from .sklearn import XGBModel, XGBClassifier, XGBRegressor, XGBRanker
     from .sklearn import XGBRFClassifier, XGBRFRegressor
@@ -29,5 +30,5 @@ __all__ = ['DMatrix', 'Booster',
            'XGBModel', 'XGBClassifier', 'XGBRegressor', 'XGBRanker',
            'XGBRFClassifier', 'XGBRFRegressor',
            'plot_importance', 'plot_tree', 'to_graphviz'
-           'Federated']
+           'Federated', 'listen']
 

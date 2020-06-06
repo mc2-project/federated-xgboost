@@ -5,7 +5,7 @@ import io
 import sys
 import os
 from setuptools import setup, find_packages
-# import subprocess
+import subprocess
 sys.path.insert(0, '.')
 
 CURRENT_DIR = os.path.dirname(__file__)
@@ -56,3 +56,7 @@ setup(name='xgboost',
                    'Programming Language :: Python :: 3.7'],
       python_requires='>=3.4',
       url='https://github.com/dmlc/xgboost')
+
+print("Updating protos")
+subprocess.run(["python3", "-m", "grpc_tools.protoc", "-I", "xgboost/rpc/protos", "--python_out=xgboost/rpc", "--grpc_python_out=xgboost/rpc", "xgboost/rpc/protos/fxgb.proto"]) 
+
