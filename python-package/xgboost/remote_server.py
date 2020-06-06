@@ -17,7 +17,7 @@ import json
 import subprocess
 
 
-def get_dmlc_vars(env):
+def config_rabit(env):
     '''
     Returns list of strings representing DMLC variables needed for rabit.
     Parsed in allreduce_base.cc from '<name>=<value>' format.
@@ -28,7 +28,7 @@ def get_dmlc_vars(env):
     Return:
         list containing DMLC variables
     '''
-    temp = [
+    rabit_config = [
         'DMLC_TRACKER_URI=' + env.DMLC_TRACKER_URI,
         'DMLC_TRACKER_PORT=' + str(env.DMLC_TRACKER_PORT),
         'DMLC_ROLE=' + env.DMLC_ROLE,
@@ -36,9 +36,9 @@ def get_dmlc_vars(env):
         'DMLC_NUM_WORKER=' + str(env.DMLC_NUM_WORKER),
         'DMLC_NUM_SERVER=' + str(env.DMLC_NUM_SERVER),
     ]
+
     # Python strings are unicode, but C strings are bytes, so we must convert to bytes.
-    #  return [bytes(s, 'utf-8') for s in temp]
-    return temp
+    return rabit_config 
 
 
 class FederatedXGBoostServicer():
@@ -66,7 +66,7 @@ class FederatedXGBoostServicer():
             print("Please enter 'Y' to confirm or 'N' to reject.")
             accept_job = input("Join session? [Y/N]: ")
         if accept_job == 'Y':
-            self.rabit_config = get_dmlc_vars(request.dmlc_vars)
+            self.rabit_config = config_rabit(request.rabit_config)
             return fxgb_pb2.WorkerResponse(success=True)
         else:
             return fxgb_pb2.WorkerResponse(success=False)
@@ -88,13 +88,14 @@ class FederatedXGBoostServicer():
             rabit_config_str = json.dumps(self.rabit_config)
             cmd = ["python3", str(path_to_script), str(rabit_config_str)]
 
-            # Real time output of process
+            # Output of process
             process = subprocess.Popen(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
             for line in iter(process.stdout.readline, b''):
                 line = line.decode("utf-8")
                 sys.stdout.write(line)
+                sys.stdout.flush()
 
             rc = process.returncode
 

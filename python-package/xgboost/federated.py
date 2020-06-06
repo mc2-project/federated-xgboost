@@ -42,23 +42,6 @@ class Federated:
         dmat = DMatrix(data[:, 1:], label=data[:, 0], missing=missing, weight=weight, silent=silent, feature_names=feature_names, feature_types=feature_types, nthread=nthread)
         return dmat
     
-    #  def train(self, dtrain, params, num_rounds, evals):
-    #      """Federation-wise training of a booster with given parameters
-    #  
-    #      Parameters
-    #      ----------
-    #      dtrain : DMatrix
-    #          Training data
-    #      params : dict
-    #          Booster params
-    #      num_rounds : int
-    #          Number of boosting iterations
-    #      evals : list of pairs (DMatrix, string)
-    #          List of items to be evaluated during training. This allows users to watch performance on the validation set
-    #      """
-    #      bst = train(params, dtrain, num_boost_round=num_rounds, evals=evals)
-    #      return bst
-
     def get_num_parties(self):
         """
         Get number of parties in the federation

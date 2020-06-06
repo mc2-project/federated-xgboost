@@ -1,22 +1,19 @@
 import sys
 import xgboost as xgb 
 
-print("Running demo.py")
 rabit_config = sys.argv[1]
 
 # Instantiate Federated XGBoost
 fed = xgb.Federated(rabit_config)
 
 # Get number of federating parties
-print(fed.get_num_parties())
+print("Number of parties in federation: ", fed.get_num_parties())
 
 # Load training data
 # Ensure that each party's data is in the same location with the same name
-print("Load data")
 dtrain = fed.load_data("/home/ubuntu/federated-xgboost/demo/data/hb_train.csv")
 dval = fed.load_data("/home/ubuntu/federated-xgboost/demo/data/hb_val.csv")
 
-print('setting params')
 # Train a model
 params = {
         "max_depth": 3, 
