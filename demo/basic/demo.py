@@ -1,6 +1,8 @@
 import sys
 import xgboost as xgb 
 
+# Federated XGBoost automatically runs your training script and passes it the rabit configuration as an argument
+# All scripts must start with this line and pass `rabit_config` into xgb.Federated()
 rabit_config = sys.argv[1]
 
 # Instantiate Federated XGBoost
@@ -9,7 +11,7 @@ fed = xgb.Federated(rabit_config)
 # Get number of federating parties
 print("Number of parties in federation: ", fed.get_num_parties())
 
-# Load training data
+# Load training data - pass in the absolute path to the data 
 # Ensure that each party's data is in the same location with the same name
 dtrain = fed.load_data("/home/ubuntu/federated-xgboost/demo/data/hb_train.csv")
 dval = fed.load_data("/home/ubuntu/federated-xgboost/demo/data/hb_val.csv")

@@ -1,9 +1,5 @@
 syntax = "proto3";
 
-// Compile with -> python -m grpc_tools.protoc -I=. --python_out=<_pb2 file out> --grpc_python_out=<_pb2_grpc file out> <path of this file>
-
-// Compile with -> python -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. ./fxgb.proto
-
 message DMLC_VARS {
     string DMLC_TRACKER_URI = 1;
     int32 DMLC_TRACKER_PORT = 2;

@@ -1,19 +1,16 @@
 from numpy import genfromtxt
-from .training import train
-from .core import DMatrix, Booster
+from .core import DMatrix
 from . import rabit
-import logging
 import json
 
-logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 class Federated:
     def __init__(self, rabit_config):
         """
         Parameters
         ----------
-        rabit_config : list
-            list of Rabit configuration variables
+        rabit_config : string 
+            string representation of Rabit configuration variables
         """
         rabit_config_lst = json.loads(rabit_config)
 
@@ -31,13 +28,13 @@ class Federated:
         Parameters
         ----------
         data : string
-            Path to data. Must be the same at each party.
+            Absolute path to data. Must be the same at each party.
         
         Returns
         -------
         dmat : DMatrix
+            DMatrix representation of the loaded
         """
-        logging.info("Loading test data")
         data = genfromtxt(data, delimiter=',')
         dmat = DMatrix(data[:, 1:], label=data[:, 0], missing=missing, weight=weight, silent=silent, feature_names=feature_names, feature_types=feature_types, nthread=nthread)
         return dmat
@@ -54,5 +51,8 @@ class Federated:
         return rabit.get_world_size()
 
     def shutdown(self):
+        """
+        Shut down the tracker
+        """
         logging.info("Shutting down tracker")
         rabit.finalize()
