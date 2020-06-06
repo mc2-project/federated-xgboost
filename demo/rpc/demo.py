@@ -4,7 +4,11 @@ import xgboost as xgb
 rabit_config = sys.argv[1]
 
 # Instantiate Federated XGBoost
-fed = xgb.Federated(rabit_config)
+root_cert = "certs/root_cert.crt"
+cert_chain = "certs/cert_chain.crt"
+private_key = "certs/private_key.pem"
+
+fed = xgb.Federated(rabit_config, root_cert, cert_chain, private_key)
 
 # Get number of federating parties
 print("Number of parties in federation: ", fed.get_num_parties())

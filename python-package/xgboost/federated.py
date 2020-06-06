@@ -8,14 +8,25 @@ import json
 logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 class Federated:
-    def __init__(self, rabit_config):
+    def __init__(self, rabit_config, root_certificate, certificate_chain, private_key):
         """
         Parameters
         ----------
         rabit_config : list
-            list of Rabit configuration variables
+            list of Rabit configuration variables for tracker
+        root_certificate : str
+            path to root certificate
+        certificate_chain : str
+            path to certificate chain
+        private_key : str
+            path to private key
         """
         rabit_config_lst = json.loads(rabit_config)
+        rabit_config_lst.append("rabit_root_cert_path=" + root_certificate)
+        rabit_config_lst.append("rabit_cert_chain_path=" + certificate_chain)
+        rabit_config_lst.append("rabit_private_key_path=" + private_key)
+
+        print(rabit_config_lst)
 
         # Python strings are unicode, but C strings are bytes, so we must convert to bytes.
         rabit_config = [bytes(s, 'utf-8') for s in rabit_config_lst]
