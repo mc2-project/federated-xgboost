@@ -3,7 +3,7 @@
 
 # after executing `make pippack`, cd xgboost-python,
 #run this script and get the sdist tar.gz in ./dist/
-sh ./xgboost/build-python.sh
+sh ./federatedxgboost/build-python.sh
 cp setup_pip.py setup.py
 python setup.py sdist
 

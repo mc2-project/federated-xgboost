@@ -1,5 +1,5 @@
 # pylint: disable=invalid-name, exec-used
-"""Setup xgboost package."""
+"""Setup federatedxgboost package."""
 from __future__ import absolute_import
 import io
 import sys
@@ -13,7 +13,7 @@ CURRENT_DIR = os.path.dirname(__file__)
 # We can not import `xgboost.libpath` in setup.py directly since xgboost/__init__.py
 # import `xgboost.core` and finally will import `numpy` and `scipy` which are setup
 # `install_requires`. That's why we're using `exec` here.
-libpath_py = os.path.join(CURRENT_DIR, 'xgboost/libpath.py')
+libpath_py = os.path.join(CURRENT_DIR, 'federatedxgboost/libpath.py')
 libpath = {'__file__': libpath_py}
 exec(compile(open(libpath_py, "rb").read(), libpath_py, 'exec'), libpath, libpath)
 
@@ -29,9 +29,9 @@ for libfile in libpath['find_lib_path']():
 print("Install libxgboost from: %s" % LIB_PATH)
 # Please use setup_pip.py for generating and deploying pip installation
 # detailed instruction in setup_pip.py
-setup(name='xgboost',
-      version=open(os.path.join(CURRENT_DIR, 'xgboost/VERSION')).read().strip(),
-      description="XGBoost Python Package",
+setup(name='federatedxgboost',
+      version=open(os.path.join(CURRENT_DIR, 'federatedxgboost/VERSION')).read().strip(),
+      description="Federated XGBoost Python Package",
       long_description=io.open(os.path.join(CURRENT_DIR, 'README.rst'), encoding='utf-8').read(),
       install_requires=[
           'numpy',
@@ -44,7 +44,7 @@ setup(name='xgboost',
       # this will use MANIFEST.in during install where we specify additional files,
       # this is the golden line
       include_package_data=True,
-      data_files=[('xgboost', LIB_PATH)],
+      data_files=[('federatedxgboost', LIB_PATH)],
       license='Apache-2.0',
       classifiers=['License :: OSI Approved :: Apache Software License',
                    'Development Status :: 5 - Production/Stable',
@@ -55,8 +55,8 @@ setup(name='xgboost',
                    'Programming Language :: Python :: 3.6',
                    'Programming Language :: Python :: 3.7'],
       python_requires='>=3.4',
-      url='https://github.com/dmlc/xgboost')
+      url='https://github.com/mc2-project/federated-xgboost')
 
 print("Updating protos")
-subprocess.run(["python3", "-m", "grpc_tools.protoc", "-I", "xgboost/rpc/protos", "--python_out=xgboost/rpc", "--grpc_python_out=xgboost/rpc", "xgboost/rpc/protos/fxgb.proto"]) 
+subprocess.run(["python3", "-m", "grpc_tools.protoc", "-I", "federatedxgboost/rpc/protos", "--python_out=federatedxgboost/rpc", "--grpc_python_out=federatedxgboost/rpc", "federatedxgboost/rpc/protos/fxgb.proto"]) 
 

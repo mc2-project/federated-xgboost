@@ -1,3 +1,3 @@
-import xgboost as xgb
+import federatedxgboost as fxgb
 
-xgb.listen(50051)
+fxgb.listen(50051)

@@ -54,5 +54,4 @@ class Federated:
         """
         Shut down the tracker
         """
-        logging.info("Shutting down tracker")
         rabit.finalize()
