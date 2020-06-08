@@ -14,7 +14,7 @@ set -x
 
 #pushd xgboost
 oldpath=`pwd`
-cd ./xgboost/
+cd ./federatedxgboost/
 
 if echo "${OSTYPE}" | grep -q "darwin"; then
   LIB_XGBOOST=libxgboost.dylib

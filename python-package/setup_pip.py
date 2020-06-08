@@ -15,7 +15,7 @@ if os.name != 'nt':     # if not windows, compile and install
     # if not windows, compile and install
     if len(sys.argv) < 2 or sys.argv[1] != 'sdist':
         # do not build for sdist
-        os.system('sh ./xgboost/build-python.sh')
+        os.system('sh ./federatedxgboost/build-python.sh')
 else:
     print('Windows users please use github installation.')
     sys.exit()
@@ -35,15 +35,15 @@ class BinaryDistribution(Distribution):
 # `install_requires`. That's why we're using `exec` here.
 # do not import libpath for sdist
 if len(sys.argv) < 2 or sys.argv[1] != 'sdist':
-    libpath_py = os.path.join(CURRENT_DIR, 'xgboost/libpath.py')
+    libpath_py = os.path.join(CURRENT_DIR, 'federatedxgboost/libpath.py')
     libpath = {'__file__': libpath_py}
     exec(compile(open(libpath_py, "rb").read(), libpath_py, 'exec'), libpath, libpath)
 
     LIB_PATH = libpath['find_lib_path']()
 
-setup(name='xgboost',
-      version=open(os.path.join(CURRENT_DIR, 'xgboost/VERSION')).read().strip(),
-      description='XGBoost Python Package',
+setup(name='federatedxgboost',
+      version=open(os.path.join(CURRENT_DIR, 'federatedxgboost/VERSION')).read().strip(),
+      description='Federated XGBoost Python Package',
       install_requires=[
           'numpy',
           'scipy',
@@ -74,4 +74,4 @@ setup(name='xgboost',
                    'Programming Language :: Python :: 3.6',
                    'Programming Language :: Python :: 3.7'],
       python_requires='>=3.4',
-      url='https://github.com/dmlc/xgboost')
+      url='https://github.com/mc2-project/federated-xgboost')

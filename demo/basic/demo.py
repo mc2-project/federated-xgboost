@@ -1,5 +1,5 @@
 import sys
-import xgboost as xgb 
+import federatedxgboost as xgb 
 
 # Federated XGBoost automatically runs your training script and passes it the rabit configuration as an argument
 # All scripts must start with this line and pass `rabit_config` into xgb.Federated()
