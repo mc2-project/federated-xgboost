@@ -19,7 +19,7 @@ git clone --recursive https://github.com/mc2-project/federated-xgboost.git
 2. Install Federated XGBoost dependencies.
 
 ```
-sudo apt-get install cmake
+sudo apt-get install cmake libmbedtls-dev
 pip3 install numpy grpcio grpcio-tools
 ```
 
