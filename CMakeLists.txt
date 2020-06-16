@@ -86,6 +86,8 @@ else ()
   set(RABIT_SOURCES
     rabit/src/allreduce_base.cc
     rabit/src/allreduce_robust.cc
+    rabit/src/ssl_socket.cc
+    rabit/src/ssl_context_manager.cc
     rabit/src/engine.cc
     rabit/src/c_api.cc)
 endif (MINGW OR R_LIB)
@@ -99,7 +101,7 @@ set_target_properties(rabit
   CXX_STANDARD 11
   CXX_STANDARD_REQUIRED ON
   POSITION_INDEPENDENT_CODE ON)
-list(APPEND LINKED_LIBRARIES_PRIVATE rabit)
+list(APPEND LINKED_LIBRARIES_PRIVATE rabit mbedcrypto mbedtls mbedx509)
 
 # Exports some R specific definitions and objects
 if (R_LIB)
