@@ -10,6 +10,9 @@ sys.path.insert(0, '.')
 
 CURRENT_DIR = os.path.dirname(__file__)
 
+print("Updating protos")
+subprocess.run(["python3", "-m", "grpc_tools.protoc", "-I", "federatedxgboost/rpc/protos", "--python_out=federatedxgboost/rpc", "--grpc_python_out=federatedxgboost/rpc", "federatedxgboost/rpc/protos/fxgb.proto"]) 
+
 # We can not import `xgboost.libpath` in setup.py directly since xgboost/__init__.py
 # import `xgboost.core` and finally will import `numpy` and `scipy` which are setup
 # `install_requires`. That's why we're using `exec` here.
@@ -35,7 +38,7 @@ setup(name='federatedxgboost',
       long_description=io.open(os.path.join(CURRENT_DIR, 'README.rst'), encoding='utf-8').read(),
       install_requires=[
           'numpy',
-          'scipy',
+          #  'scipy',
       ],
       maintainer='Hyunsu Cho',
       maintainer_email='chohyu01@cs.washington.edu',
@@ -57,6 +60,4 @@ setup(name='federatedxgboost',
       python_requires='>=3.4',
       url='https://github.com/mc2-project/federated-xgboost')
 
-print("Updating protos")
-subprocess.run(["python3", "-m", "grpc_tools.protoc", "-I", "federatedxgboost/rpc/protos", "--python_out=federatedxgboost/rpc", "--grpc_python_out=federatedxgboost/rpc", "federatedxgboost/rpc/protos/fxgb.proto"]) 
 

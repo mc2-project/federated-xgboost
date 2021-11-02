@@ -96,3 +96,6 @@ plugin/updater_gpu/test/cpp/data
 # files from R-package source install
 **/config.status
 R-package/src/Makevars
+
+# Auto-generated grpc files
+*fxgb_pb2*py

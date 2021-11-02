@@ -13,8 +13,8 @@ print("Number of parties in federation: ", fed.get_num_parties())
 
 # Load training data - pass in the absolute path to the data 
 # Ensure that each party's data is in the same location with the same name
-dtrain = fed.load_data("/home/ubuntu/federated-xgboost/demo/data/hb_train.csv")
-dval = fed.load_data("/home/ubuntu/federated-xgboost/demo/data/hb_val.csv")
+dtrain = fed.load_data("/home/opaque/federated-xgboost/demo/data/hb_train.csv")
+dval = fed.load_data("/home/opaque/federated-xgboost/demo/data/hb_val.csv")
 
 # Train a model
 params = {
@@ -29,7 +29,7 @@ num_rounds = 20
 print("Training")
 bst = fxgb.train(params, dtrain, num_rounds, evals=[(dtrain, "dtrain"), (dval, "dval")])
 
-dtest = fed.load_data("/home/ubuntu/federated-xgboost/demo/data/hb_test.csv")
+dtest = fed.load_data("/home/opaque/federated-xgboost/demo/data/hb_test.csv")
 
 # Get predictions
 print("Predicting")
