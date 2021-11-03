@@ -101,4 +101,4 @@ R-package/src/Makevars
 *fxgb_pb2*py
 
 # Demo hosts.config file
-demo/*/hosts.config
+*demo/*/hosts.config

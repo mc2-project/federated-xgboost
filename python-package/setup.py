@@ -38,7 +38,7 @@ setup(name='federatedxgboost',
       long_description=io.open(os.path.join(CURRENT_DIR, 'README.rst'), encoding='utf-8').read(),
       install_requires=[
           'numpy',
-          #  'scipy',
+          'scipy',
       ],
       maintainer='Hyunsu Cho',
       maintainer_email='chohyu01@cs.washington.edu',
