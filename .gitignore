@@ -99,3 +99,6 @@ R-package/src/Makevars
 
 # Auto-generated grpc files
 *fxgb_pb2*py
+
+# Demo hosts.config file
+demo/*/hosts.config

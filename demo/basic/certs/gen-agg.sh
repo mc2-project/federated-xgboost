@@ -1,9 +1,3 @@
-# Set client's name
-# if [ "$#" -ne 1 ]; then
-#     echo "Usage: ./gen-client.sh <username>"
-#     exit 1
-# fi
-
 USERNAME=user
 
 # Generate keypair for client
